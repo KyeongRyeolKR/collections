@@ -37,6 +37,15 @@ class MyArrayListTest {
     }
 
     @Test
+    void testRemoveByObject() {
+        list.add("Element1");
+        list.add("Element2");
+        list.add("Element3");
+        assertEquals("Element2", list.remove("Element2"));
+        assertEquals(2, list.size());
+    }
+
+    @Test
     void testGet() {
         list.add("Element1");
         list.add("Element2");

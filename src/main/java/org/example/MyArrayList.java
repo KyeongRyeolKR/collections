@@ -36,6 +36,10 @@ public class MyArrayList<T> {
         return removed;
     }
 
+    public T remove(T o) {
+        return remove(indexOf(o));
+    }
+
     public boolean contains(T o) {
         for(int i=0; i<size; i++) {
             if(array[i].equals(o)) return true;
