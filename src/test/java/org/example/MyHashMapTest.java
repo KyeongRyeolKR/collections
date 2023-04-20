@@ -92,4 +92,14 @@ class MyHashMapTest {
         assertTrue(map.isEmpty());
         System.out.println(map);
     }
+
+    @Test
+    void testOtherTypesMap() {
+        MyHashMap<Integer, String> testMap = new MyHashMap<>();
+        for(int i=1; i<=11; i++) {
+            testMap.put(i, "%d번값".formatted(i));
+        }
+        testMap.remove(1);
+        System.out.println(testMap);
+    }
 }

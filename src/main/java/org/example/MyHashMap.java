@@ -50,8 +50,10 @@ public class MyHashMap<K, V> {
                 V removed = (V) values[i];
                 keys[i] = keys[i+1];
                 keys[i+1] = null;
+                keys = Arrays.copyOf(keys, initLength); // 이걸 안해주면 다음에 값을 put 할때 인덱스가 이어지지 않음
                 values[i] = values[i+1];
                 values[i+1] = null;
+                values = Arrays.copyOf(values, initLength); // 이걸 안해주면 다음에 값을 put 할때 인덱스가 이어지지 않음
                 size--;
                 return removed;
             }
