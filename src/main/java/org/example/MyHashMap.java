@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class MyHashMap<K, V> {
 
@@ -36,24 +37,24 @@ public class MyHashMap<K, V> {
     }
 
     public V get(K key) {
-        for (int i = 0; i < keys.length; i++) {
-            if (keys[i].equals(key)) {
-                return (V) values[i];
-            }
-        }
-        return null;
+        return IntStream.range(0, keys.length)
+                .filter(e -> keys[e].equals(key))
+                .mapToObj(e -> (V) values[e])
+                .findFirst()
+                .orElse(null);
     }
 
     public V remove(K key) {
+        V removed;
         for(int i=0; i<keys.length; i++) {
             if(keys[i] != null && keys[i].equals(key)) {
-                V removed = (V) values[i];
-                keys[i] = keys[i+1];
-                keys[i+1] = null;
-                keys = Arrays.copyOf(keys, initLength); // 이걸 안해주면 다음에 값을 put 할때 인덱스가 이어지지 않음
-                values[i] = values[i+1];
-                values[i+1] = null;
-                values = Arrays.copyOf(values, initLength); // 이걸 안해주면 다음에 값을 put 할때 인덱스가 이어지지 않음
+                removed = (V) values[i];
+                for(int j=i+1; j<size; j++) {
+                    keys[j] = keys[j + 1];
+                    keys[j + 1] = null;
+                    values[j] = values[j + 1];
+                    values[j + 1] = null;
+                }
                 size--;
                 return removed;
             }
@@ -86,11 +87,9 @@ public class MyHashMap<K, V> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        for(int i=0; i<keys.length; i++) {
-            if(keys[i] != null && values[i] != null) {
-                sb.append(keys[i]).append("=").append(values[i]);
-                if (i != keys.length - 1 && keys[i+1] != null) sb.append(", ");
-            }
+        for(int i=0; i<size; i++) {
+            sb.append(keys[i]).append("=").append(values[i]);
+            if (i != size - 1) sb.append(", ");
         }
         sb.append("}");
 
