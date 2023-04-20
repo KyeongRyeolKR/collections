@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class MyArrayList<T> {
 
@@ -41,17 +42,15 @@ public class MyArrayList<T> {
     }
 
     public boolean contains(T o) {
-        for(int i=0; i<size; i++) {
-            if(array[i].equals(o)) return true;
-        }
-        return false;
+        return IntStream.range(0, size)
+                .anyMatch(e -> array[e].equals(o));
     }
 
     public int indexOf(T o) {
-        for(int i=0; i<size; i++) {
-            if(array[i].equals(o)) return i;
-        }
-        return -1;
+        return IntStream.range(0, size)
+                .filter(e -> array[e].equals(o))
+                .findFirst()
+                .orElse(-1);
     }
 
     public void clear() {
