@@ -19,6 +19,19 @@ public class MyArrayList<T> {
         return true;
     }
 
+    public boolean add(int index, T o) {
+        if(size == initLength) {
+            initLength += 10;
+            array = Arrays.copyOf(array, initLength);
+        }
+        for(int i=size-1; i>=index; i--) {
+            array[i+1] = array[i];
+        }
+        array[index] = o;
+        size++;
+        return true;
+    }
+
     public int size() {
         return size;
     }
@@ -33,6 +46,7 @@ public class MyArrayList<T> {
             array[i-1] = array[i];
         }
         array[index + 1] = null;
+        array = Arrays.copyOf(array, initLength);
         size--;
         return removed;
     }
@@ -60,5 +74,17 @@ public class MyArrayList<T> {
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for(int i=0; i<size; i++) {
+            sb.append(array[i]);
+            if(i != size-1) sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

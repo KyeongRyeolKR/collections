@@ -3,6 +3,7 @@ package org.example;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyArrayListTest {
@@ -25,6 +26,17 @@ class MyArrayListTest {
         for(int i=0; i<11; i++) {
             list.add("E%d".formatted(i));
         }
+        System.out.println(list);
+    }
+
+    @Test
+    void testAddWithIndex() {
+        list.add("100");
+        list.add("200");
+        list.add("300");
+        list.add("400");
+        list.add(1, "999");
+        assertThat(list.get(1)).isEqualTo("999");
     }
 
     @Test
